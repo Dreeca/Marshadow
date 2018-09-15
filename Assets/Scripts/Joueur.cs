@@ -11,8 +11,8 @@ public class Joueur {
     {
         pv = p;
         argent = a;
-        GameManager.gameManager.hud.PrintLives(pv);
-        GameManager.gameManager.hud.PrintMoney(argent);
+       GameManager.gameManager.hud.PrintLives(pv);
+       GameManager.gameManager.hud.PrintMoney(argent);
     }
 
     public void PerdreArgent(int i)

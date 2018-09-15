@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class HUD : MonoBehaviour {
 
-    private float temps; // facilite pour afficher en secondes
-    private float time; // calcul du temps actuel du niveau, considere qu'il commence a 20
-    public bool timesup; // quand timesup, le timer de debut est fini et les phase de construction est terminee, les monstres apparaissent
+    private int temps; // facilite pour afficher en secondes
+    private static bool b;
+    public static float time; // calcul du temps actuel du niveau, considere qu'il commence a 20
 
 	// Use this for initialization
 	void Start () {
         ResetTimer();
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -21,33 +21,36 @@ public class HUD : MonoBehaviour {
     void TimerUpdate()
     {
         time -= Time.deltaTime;
+        Debug.Log(b);
         if (time > 0f)
         {
             GameManager.gameManager.timer.GetComponent<CanvasGroup>().alpha = 1;
-            if (time < temps)
-            {
-                GameManager.gameManager.timer.text = temps.ToString();
-                temps--;
-            }
+            GameManager.gameManager.achatMenu.GetComponent<CanvasGroup>().alpha = 1;
+            GameManager.gameManager.timer.text = ((int)time).ToString();
         }
         else
         {
             GameManager.gameManager.timer.text = "C'est parti !";
-            timesup = true;
             GameManager.gameManager.achatMenu.GetComponent<CanvasGroup>().alpha = 0;
-            if (time < -3f)
+            if ((int)time <= -3 && !b)
             {
+                GameManager.gameManager.numerovague++;
                 GameManager.gameManager.timer.GetComponent<CanvasGroup>().alpha = 0;
+                Monstre mobCree = new Monstre(1, 1, 1);
+                GameManager.gameManager.monstres.Add(mobCree);
+                GameObject mobInst = Instantiate(GameManager.gameManager.minion, GameManager.gameManager.spawn.transform.position, GameManager.gameManager.spawn.transform.rotation);
+                mobInst.GetComponent<MonsterController>().Mob = mobCree;
+                b = true;
+                Debug.Log("nouveau monstre");
             }
         }
     }
 
     public void ResetTimer()
     {
-        time = 20f;
-        temps = 19f;
-        timesup = false;
-        GameManager.gameManager.achatMenu.GetComponent<CanvasGroup>().alpha = 1;
+        time = 5f;
+        temps = 4;
+        b = false;
     }
 
     public void PrintLives(int vies)
@@ -57,6 +60,6 @@ public class HUD : MonoBehaviour {
 
     public void PrintMoney(int argent)
     {
-        GameManager.gameManager.pv.text = argent + " $";
+        GameManager.gameManager.argent.text = argent + " $";
     }
 }
