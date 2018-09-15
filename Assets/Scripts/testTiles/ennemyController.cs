@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class ennemyController : MonoBehaviour {
 
-
-
-    public tileCollider tiles;
+    
     public Vector2Int position;
 
     public enum direction { none, up, down, left, right };
