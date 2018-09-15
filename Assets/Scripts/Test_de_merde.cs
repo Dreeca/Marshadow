@@ -9,35 +9,17 @@ public class Test_de_merde : MonoBehaviour {
     private RaycastHit2D[] tabTarget;
     private float timerFire = 0;
     public GameObject Balle;
-    private float rangeDetect = 12;
-    private Tour tower;
-    private Animator ou;
+    private float rangeDetect = 6;
 
-    public Tour Tower
+    float damage = 5;
+
+    public float GetDamage ()
     {
-        get
-        {
-            return tower;
-        }
-
-        set
-        {
-            tower = value;
-        }
+        return damage;
     }
-
-    public int GetDegat ()
-    {
-        return Tower.Degat;
-    }
-
-    private void Start()
-    {
-        ou = GetComponent<Animator>();
-    }
-
-    // Update is called once per frame
-    void Update () {
+	
+	// Update is called once per frame
+	void Update () {
         timerFire = timerFire + Time.deltaTime;
        
         tabTarget = Physics2D.CircleCastAll(this.transform.position, rangeDetect, Vector2.zero);
@@ -45,7 +27,7 @@ public class Test_de_merde : MonoBehaviour {
         Debug.Log(tabTarget.Length);
         if (tabTarget.Length != 0) item = ProxyTarget(tabTarget);
         //Tir toute les deux secondes
-        if (timerFire > 3)
+        if (timerFire > 0.5)
         {
             //Si cible trouve
             if (item)
@@ -55,15 +37,13 @@ public class Test_de_merde : MonoBehaviour {
                 Debug.Log(item.point);
                 GameObject projectil = Instantiate(Balle, this.transform);
                 projectil.GetComponent<Tir>().SetVitesse(new Vector2(item.transform.position.x-this.transform.position.x, 
-                    item.transform.position.y-this.transform.position.y).normalized*250);
+                    item.transform.position.y-this.transform.position.y).normalized*150);
                 projectil.GetComponent<Tir>().Autre();
-                projectil.GetComponent<Tir>().SetDamage(GetDegat());
+                projectil.GetComponent<Tir>().SetDamage(damage);
                 item = Physics2D.CircleCast(this.transform.position, 0, Vector2.zero);
-                //ou.SetTrigger("attack");
             }
             
             timerFire = 0;
-            Debug.Log(timerFire);
         }
 	}
 
@@ -78,7 +58,7 @@ public class Test_de_merde : MonoBehaviour {
         {
             Debug.Log("T kon");
             verif = new Vector2(vec.transform.position.x - this.transform.position.x, vec.transform.position.y - this.transform.position.y);
-            if (min.magnitude > verif.magnitude && tabTarget[compteur].transform.tag.Equals("Ennemy"))
+            if (min.magnitude > verif.magnitude)
             {
                 indmin = compteur;
                 min = verif;

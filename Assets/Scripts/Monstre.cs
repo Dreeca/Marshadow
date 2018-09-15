@@ -8,19 +8,6 @@ public class Monstre  {
     int or;
     private int pv;
 
-    public int Pv
-    {
-        get
-        {
-            return pv;
-        }
-
-        set
-        {
-            pv = value;
-        }
-    }
-
     /// <param name="d">degat</param>
     /// <param name="o">or</param>
     /// <param name="p">pv</param>
@@ -28,7 +15,7 @@ public class Monstre  {
     {
         degat = d;
         or = o;
-        Pv = p;
+        pv = p;
     }
 
     //Le joueur gagne les gold du monstre, le monstre est supprimé de la liste de monstres.
@@ -39,7 +26,7 @@ public class Monstre  {
         GameManager.gameManager.monstres.Remove(this);
         if (GameManager.gameManager.monstres.Count == 0 && GameManager.gameManager.joueur.pv > 0)
         {
-            if (GameManager.gameManager.nbvague >= GameManager.gameManager.numerovague) { GameManager.gameManager.hud.ResetTimer(); }
+            if (GameManager.gameManager.nbvague >= GameManager.gameManager.numerovague) { GameManager.gameManager.NewVague(); }
             else { GameManager.gameManager.Gagner(); }
         }
     }
@@ -52,7 +39,7 @@ public class Monstre  {
         GameManager.gameManager.monstres.Remove(this);
         if (GameManager.gameManager.monstres.Count == 0 && GameManager.gameManager.joueur.pv > 0)
         {
-            if (GameManager.gameManager.nbvague >= GameManager.gameManager.numerovague) { GameManager.gameManager.hud.ResetTimer(); }
+            if (GameManager.gameManager.nbvague >= GameManager.gameManager.numerovague) { GameManager.gameManager.NewVague(); }
             else { GameManager.gameManager.Gagner(); }
         }
     }
