@@ -7,6 +7,7 @@ public class MonsterController : MonoBehaviour {
     private Animator anim_monster;
     private Rigidbody2D body;
     private bool isrotate;
+    private Monstre monstre;
 
     private void Start()
     {
@@ -26,6 +27,15 @@ public class MonsterController : MonoBehaviour {
         anim_monster.SetInteger("direction", 2);
         isrotate = true;
         this.GetComponent<SpriteRenderer>().flipX = true;
+    }
+
+    private void setMonstre(Monstre mob)
+    {
+        monstre = mob;
+    }
+    private Monstre GetMonstre()
+    {
+        return monstre;
     }
 
 
